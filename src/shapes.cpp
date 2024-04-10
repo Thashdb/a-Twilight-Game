@@ -1,4 +1,4 @@
-#include "../INCLUDE/shapes.h"
+#include "../include/shapes.h"
 
 const int numSegments = 100; // Número de segmentos para aproximar o círculo
 

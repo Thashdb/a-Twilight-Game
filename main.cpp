@@ -1,8 +1,11 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
+#include "include/shapes.h"
 
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 int width = 1200, height = 580;
@@ -51,22 +54,18 @@ void draw() {
     glColor3f(1.0f, 1.0f, 1.0f); // Cor branca para o jogador
 
     // Desenha o jogador
-    glBegin(GL_QUADS);
-    glVertex2f(playerPosX, playerPosY);
-    glVertex2f(playerPosX + 30, playerPosY);
-    glVertex2f(playerPosX + 30, playerPosY + 40);
-    glVertex2f(playerPosX, playerPosY + 40);
-    glEnd();
+    drawSquare(playerPosX, playerPosY, 
+               playerPosX + 30, playerPosY, 
+               playerPosX + 30, playerPosY + 40, 
+               playerPosX, playerPosY + 40);
 
     // Desenha os quadrados pretos
     glColor3f(0.0f, 0.0f, 0.0f); // Cor preta para os quadrados pretos
     for (int i = 0; i < MAX_BLACK_SQUARES; ++i) {
-        glBegin(GL_QUADS);
-        glVertex2f(blackSquares[i].posX, blackSquares[i].posY);
-        glVertex2f(blackSquares[i].posX + 50, blackSquares[i].posY);
-        glVertex2f(blackSquares[i].posX + 50, blackSquares[i].posY + 50);
-        glVertex2f(blackSquares[i].posX, blackSquares[i].posY + 50);
-        glEnd();
+        drawSquare(blackSquares[i].posX, blackSquares[i].posY,
+                   blackSquares[i].posX + 50, blackSquares[i].posY,
+                   blackSquares[i].posX + 50, blackSquares[i].posY + 50,
+                   blackSquares[i].posX, blackSquares[i].posY + 50);
     }
 
     glFlush();
