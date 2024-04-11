@@ -52,23 +52,30 @@ void setup() {
 // Função para desenhar os quadrados
 void draw() {
     glClear(GL_COLOR_BUFFER_BIT);
-    glColor3f(1.0f, 1.0f, 1.0f); // Cor branca para o jogador
-    drawText(100, 100, "teste");
+    int aux=2; //flag de telas
 
-    // Desenha o jogador
-    drawSquare(playerPosX, playerPosY, 
-               playerPosX + 30, playerPosY, 
-               playerPosX + 30, playerPosY + 40, 
-               playerPosX, playerPosY + 40);
+    if(aux==1){ // inicia menu
+        drawMenu();
+    }else if(aux==2){  // teste inicial jogo
+        glColor3f(1.0f, 1.0f, 1.0f); // Cor branca para o jogador
+        drawText(100, 100, "teste");
 
-    // Desenha os quadrados pretos
-    glColor3f(0.0f, 0.0f, 0.0f); // Cor preta para os quadrados pretos
-    for (int i = 0; i < MAX_BLACK_SQUARES; ++i) {
-        drawSquare(blackSquares[i].posX, blackSquares[i].posY,
-                   blackSquares[i].posX + 50, blackSquares[i].posY,
-                   blackSquares[i].posX + 50, blackSquares[i].posY + 50,
-                   blackSquares[i].posX, blackSquares[i].posY + 50);
+        // Desenha o jogador
+        drawSquare(playerPosX, playerPosY, 
+                playerPosX + 30, playerPosY, 
+                playerPosX + 30, playerPosY + 40, 
+                playerPosX, playerPosY + 40);
+
+        // Desenha os quadrados pretos
+        glColor3f(0.0f, 0.0f, 0.0f); // Cor preta para os quadrados pretos
+        for (int i = 0; i < MAX_BLACK_SQUARES; ++i) {
+            drawSquare(blackSquares[i].posX, blackSquares[i].posY,
+                    blackSquares[i].posX + 50, blackSquares[i].posY,
+                    blackSquares[i].posX + 50, blackSquares[i].posY + 50,
+                    blackSquares[i].posX, blackSquares[i].posY + 50);
+        }
     }
+    
 
     glFlush();
 }
@@ -144,11 +151,11 @@ int main(int argc, char *argv[]) {
     srand(time(NULL));
 
     // Inicializa a posição e a velocidade dos quadrados pretos
-    for (int i = 0; i < MAX_BLACK_SQUARES; ++i) {
+    /*for (int i = 0; i < MAX_BLACK_SQUARES; ++i) {
         blackSquares[i].posX = 1210.0f + rand() % 1000;
         blackSquares[i].posY = 480.0f + rand() % 50;
         blackSquares[i].velX = BLACK_SQUARE_SPEED;
-    }
+    }*/
 
     // Define as funções de callback e inicia o loop principal do GLUT
     glutDisplayFunc(draw);
