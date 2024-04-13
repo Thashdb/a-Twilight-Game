@@ -1,10 +1,8 @@
 #include "../include/menu.h"
+#include "../include/shapes.h"
 
-MenuItem menuItems[] = {
-    {100.0f, 100.0f, 200.0f, 50.0f, "Item 1"},
-    {100.0f, 200.0f, 200.0f, 50.0f, "Item 2"},
-    {100.0f, 300.0f, 200.0f, 50.0f, "Item 3"}
-};
+extern int width, height;
+extern float playerPosX, playerPosY;
 
 void drawText(float posX, float posY, const char *string){
     glRasterPos2f(posX, posY); //posicao inicial do texto
@@ -27,6 +25,11 @@ void draw(MenuItem *items, int itemCount){
 void drawMenu(){
     //tela de menu
     glClearColor(0.7f, 0.74f, 0.6f, 1.0f); // Cor de fundo (verdinho)
-    drawText(280, 80, "A");
-
+    glColor3f(0, 0, 0);
+    drawSquare(playerPosX, playerPosY, 
+                playerPosX + 30, playerPosY, 
+                playerPosX + 30, playerPosY + 40, 
+                playerPosX, playerPosY + 40);
+    drawText(width/2.1, 80, "A");
+    drawText(width/2.4, 120, "Twilight Game");
 }

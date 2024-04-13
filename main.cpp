@@ -1,6 +1,5 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -10,6 +9,8 @@
 
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 int width = 1200, height = 580;
+
+int telasAux=1;
 
 // Estrutura para representar os quadrados pretos
 struct BlackSquare {
@@ -26,8 +27,7 @@ const float BLACK_SQUARE_SPEED = 3.0f;
 BlackSquare blackSquares[MAX_BLACK_SQUARES];
 
 // Variáveis para o jogador
-float playerPosX = 150.0f;
-float playerPosY = 490.0f;
+float playerPosX = 150.0f, playerPosY = 530.0f;
 float playerVelY = 0.0f;
 bool jumping = false;
 
@@ -44,7 +44,7 @@ void initGlut(int argc, char *argv[]) {
 
 // Função de configuração do OpenGL
 void setup() {
-    glClearColor(0.29f, 0.56f, 0.29f, 1.0f); // Cor de fundo (verdinho)
+    glClearColor(0.29f, 0.36f, 0.29f, 1.0f); // Cor de fundo (verdinho)
     glClear(GL_COLOR_BUFFER_BIT);
     gluOrtho2D(0, width, height, 0);
 }
@@ -52,13 +52,13 @@ void setup() {
 // Função para desenhar os quadrados
 void draw() {
     glClear(GL_COLOR_BUFFER_BIT);
-    int aux=2; //flag de telas
 
-    if(aux==1){ // inicia menu
+    if(telasAux==1){ // inicia menu
         drawMenu();
-    }else if(aux==2){  // teste inicial jogo
+    }else if(telasAux==2){  // teste inicial jogo
         glColor3f(1.0f, 1.0f, 1.0f); // Cor branca para o jogador
-        drawText(100, 100, "teste");
+        //int ponto=0;
+        drawText(880, 50, "Score: 000");
 
         // Desenha o jogador
         drawSquare(playerPosX, playerPosY, 
@@ -74,6 +74,8 @@ void draw() {
                     blackSquares[i].posX + 50, blackSquares[i].posY + 50,
                     blackSquares[i].posX, blackSquares[i].posY + 50);
         }
+    }else if(telasAux==3){
+        drawText(500, 250, "Game Over");
     }
     
 
@@ -103,6 +105,7 @@ void motion(int values) {
     // Verifica a colisão a cada movimento
     if (checkCollision()) {
         printf("Bateu\n");
+        telasAux=3;
     }
 
     glutTimerFunc(16, motion, 0);
@@ -131,7 +134,7 @@ void update(int value) {
         playerPosY += playerVelY; // Atualiza a posição no eixo y
 
         // Quando o jogador atinge o solo, redefine a posição e a velocidade
-        if (playerPosY >= 500.0f) {
+        if (playerPosY >= 530.0f) {
             playerPosY = 500.0f;
             playerVelY = 0.0f;
             jumping = false;
@@ -151,11 +154,11 @@ int main(int argc, char *argv[]) {
     srand(time(NULL));
 
     // Inicializa a posição e a velocidade dos quadrados pretos
-    /*for (int i = 0; i < MAX_BLACK_SQUARES; ++i) {
+    for (int i = 0; i < MAX_BLACK_SQUARES; ++i) {
         blackSquares[i].posX = 1210.0f + rand() % 1000;
         blackSquares[i].posY = 480.0f + rand() % 50;
         blackSquares[i].velX = BLACK_SQUARE_SPEED;
-    }*/
+    }
 
     // Define as funções de callback e inicia o loop principal do GLUT
     glutDisplayFunc(draw);
