@@ -5,7 +5,7 @@
 #include <time.h>
 
 #include "include/shapes.h"
-#include "include/menu.h"
+#include "include/screens.h"
 
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 int width = 1200, height = 580;

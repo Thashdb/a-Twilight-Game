@@ -13,7 +13,7 @@ struct MenuItem {
     const char *text; // Texto do item do menu
 };
 
-void drawText(float posX, float posY, const char *string);
-void drawMenu();
+void drawTextH1(float posX, float posY, const char *string);
+void drawInit();
 
 #endif
