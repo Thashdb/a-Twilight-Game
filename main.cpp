@@ -2,35 +2,48 @@
 #include <GL/glut.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 #include "include/shapes.h"
 #include "include/screens.h"
 
+//tela
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 int width = 1200, height = 580;
+//score
+char text[50], aux[20];
+int score=0;
+time_t startTime;
+bool isTimerStarted = false;
 
-int telasAux=1;
+//escolha de telas
+bool start = true;
+bool game = false;
+bool endGame = false;
 
+#pragma region enimies
 // Estrutura para representar os quadrados pretos
 struct BlackSquare {
     float posX;
     float posY;
     float velX;
 };
-
 // Constantes para o número máximo de quadrados pretos e a velocidade
 const int MAX_BLACK_SQUARES = 10;
 const float BLACK_SQUARE_SPEED = 3.0f;
-
 // Array para armazenar os quadrados pretos
 BlackSquare blackSquares[MAX_BLACK_SQUARES];
+#pragma endregion
 
+#pragma region player
 // Variáveis para o jogador
-float playerPosX = 150.0f, playerPosY = 530.0f;
+float playerPosX = 150.0f, playerPosY = 420.0f;
 float playerVelY = 0.0f;
 bool jumping = false;
+#pragma endregion
 
+#pragma region inicialização
 // Função de inicialização do GLUT
 void initGlut(int argc, char *argv[]) {
     glutInit(&argc, argv);
@@ -41,30 +54,34 @@ void initGlut(int argc, char *argv[]) {
     glutInitWindowPosition((SCREEN_WIDTH - width) / 2, (SCREEN_HEIGHT - height) / 2);
     glutCreateWindow("a Twilight Game");
 }
-
 // Função de configuração do OpenGL
 void setup() {
     glClearColor(0.29f, 0.36f, 0.29f, 1.0f); // Cor de fundo (verdinho)
     glClear(GL_COLOR_BUFFER_BIT);
     gluOrtho2D(0, width, height, 0);
 }
+#pragma endregion
 
 // Função para desenhar os quadrados
 void draw() {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    if(telasAux==1){ // inicia menu
-        drawMenu();
-    }else if(telasAux==2){  // teste inicial jogo
+    if(start){ // inicia menu
+        drawInit();
+    }else if(game){  // teste inicial jogo
+        start=endGame=false;
         glColor3f(1.0f, 1.0f, 1.0f); // Cor branca para o jogador
-        //int ponto=0;
-        drawText(880, 50, "Score: 000");
 
         // Desenha o jogador
         drawSquare(playerPosX, playerPosY, 
-                playerPosX + 30, playerPosY, 
-                playerPosX + 30, playerPosY + 40, 
-                playerPosX, playerPosY + 40);
+                playerPosX + 60, playerPosY, 
+                playerPosX + 60, playerPosY + 120, 
+                playerPosX, playerPosY + 120);
+        //imprime pontuação
+        strcpy(text, "Score: ");
+        sprintf(aux, "%d", score*5);    //multiplicador de pontos
+        strcat(text, aux);
+        drawTextH1(880, 50, text);
 
         // Desenha os quadrados pretos
         glColor3f(0.0f, 0.0f, 0.0f); // Cor preta para os quadrados pretos
@@ -74,11 +91,10 @@ void draw() {
                     blackSquares[i].posX + 50, blackSquares[i].posY + 50,
                     blackSquares[i].posX, blackSquares[i].posY + 50);
         }
-    }else if(telasAux==3){
-        drawText(500, 250, "Game Over");
+    }else if(endGame){
+        game=start=false;
+        drawTextH1(500, 250, "Game Over");
     }
-    
-
     glFlush();
 }
 
@@ -86,7 +102,7 @@ void draw() {
 bool checkCollision() {
     // Verifica se houve colisão entre o jogador e os quadrados pretos
     for (int i = 0; i < MAX_BLACK_SQUARES; ++i) {
-        if (playerPosX + 30 >= blackSquares[i].posX && blackSquares[i].posX + 50 >= playerPosX && playerPosY + 40 >= blackSquares[i].posY && playerPosY <= blackSquares[i].posY + 50) {
+        if (playerPosX + 60 >= blackSquares[i].posX && blackSquares[i].posX + 50 >= playerPosX && playerPosY + 120 >= blackSquares[i].posY && playerPosY <= blackSquares[i].posY + 50) {
             return true;
         }
     }
@@ -105,9 +121,9 @@ void motion(int values) {
     // Verifica a colisão a cada movimento
     if (checkCollision()) {
         printf("Bateu\n");
-        telasAux=3;
+        game=false;
+        endGame=true;
     }
-
     glutTimerFunc(16, motion, 0);
     glutPostRedisplay();
 }
@@ -120,6 +136,21 @@ void keyboard(unsigned char key, int x, int y) {
                 jumping = true;
                 playerVelY = -8.0f; // Define a velocidade inicial do pulo
             }
+            break;
+        case 83: // S
+        case 115: // s
+            if (!isTimerStarted) {
+                startTime = time(NULL); // Registra o tempo atual
+                isTimerStarted = true; // Define a flag de temporizador iniciado como verdadeira
+            }
+            game = true;
+            start = false;
+            break;
+        case 82: // R
+        case 114: // r
+            endGame = true;
+            game = false;
+            score = 0;
             break;
         case 27: // Esc
             exit(0);
@@ -134,11 +165,21 @@ void update(int value) {
         playerPosY += playerVelY; // Atualiza a posição no eixo y
 
         // Quando o jogador atinge o solo, redefine a posição e a velocidade
-        if (playerPosY >= 530.0f) {
-            playerPosY = 500.0f;
+        if (playerPosY >= 420.0f) {
+            playerPosY = 420.0f;
             playerVelY = 0.0f;
             jumping = false;
         }
+    }
+        if (isTimerStarted && game) { // Se o temporizador foi iniciado e o jogo está em execução
+        // Calcule o tempo decorrido desde o início em segundos
+        time_t currentTime = time(NULL);
+        double elapsedTime = difftime(currentTime, startTime);
+
+        // Atualiza o score com base no tempo decorrido
+        score = elapsedTime;
+
+        // Aqui você pode adicionar outras lógicas de atualização do jogo com base no tempo
     }
 
     glutTimerFunc(16, update, 0); // Chama a função de atualização novamente após 16ms
