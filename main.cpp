@@ -31,7 +31,7 @@ struct BlackSquare {
     float velX;
 };
 // Constantes para o número máximo de quadrados pretos e a velocidade
-const int MAX_BLACK_SQUARES = 30;
+const int MAX_BLACK_SQUARES = 50;
 const float BLACK_SQUARE_SPEED = 3.0f;
 
 const float MIN_DISTANCE = 200.0f;
@@ -226,7 +226,7 @@ int main(int argc, char *argv[]) {
             bool validPosition;
 
             do {
-                newPosX = 1210.0f + rand() % 1000;
+                newPosX = blackSquares[i-1].posX + rand() % 1000;
                 newPosY = 480.0f + rand() % 50;
 
                 // Define a posição como válida inicialmente
