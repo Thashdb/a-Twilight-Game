@@ -35,6 +35,9 @@ const int MAX_BLACK_SQUARES = 50;
 const float BLACK_SQUARE_SPEED = 3.0f;
 
 const float MIN_DISTANCE = 200.0f;
+const float MAX_DISTANCE = 1000.0f;
+
+float speed = BLACK_SQUARE_SPEED;
 
 
 // Array para armazenar os quadrados pretos
@@ -87,6 +90,12 @@ void draw() {
         sprintf(aux, "%d", score*5);    //multiplicador de pontos
         strcat(text, aux);
         drawTextH1(880, 50, text);
+
+        // //imprime velocidade
+        // strcpy(text, "Speed: ");
+        // sprintf(aux, "%d", speed);    //multiplicador de pontos
+        // strcat(text, aux);
+        // drawTextH1(880, 50, text);
 
         // Desenha os quadrados pretos
         glColor3f(0.0f, 0.0f, 0.0f); // Cor preta para os quadrados pretos
@@ -189,6 +198,8 @@ void update(int value) {
         score = elapsedTime;
 
         // Aqui você pode adicionar outras lógicas de atualização do jogo com base no tempo
+        //okay vou fazer ;)
+        
     }
 
     glutTimerFunc(16, update, 0); // Chama a função de atualização novamente após 16ms
@@ -218,7 +229,7 @@ int main(int argc, char *argv[]) {
         if (i == 0){
             blackSquares[i].posX = 1210.0f + rand() % 1000;
             blackSquares[i].posY = 480.0f + rand() % 50;
-            blackSquares[i].velX = BLACK_SQUARE_SPEED;
+            blackSquares[i].velX = speed;
         }
         else{
             // Gera uma nova posição aleatória
@@ -233,17 +244,18 @@ int main(int argc, char *argv[]) {
                 validPosition = true;
 
                 // Verifica se a nova posição viola a distância mínima em relação aos quadrados existentes
-                if (fabs(newPosX - blackSquares[i-1].posX) < MIN_DISTANCE) {
+                if ((fabs(newPosX - blackSquares[i-1].posX) < MIN_DISTANCE) || (fabs(newPosX - blackSquares[i-1].posX) > MAX_DISTANCE)) {
                     // Se a distância mínima for violada, a posição não é válida
                     validPosition = false;
                 }
 
             } while (!validPosition); // Repete o processo até encontrar uma posição válida
 
+            speed += 0.1f;
             // Atribui a posição válida ao quadrado preto
             blackSquares[i].posX = newPosX;
             blackSquares[i].posY = newPosY;
-            blackSquares[i].velX = BLACK_SQUARE_SPEED;
+            blackSquares[i].velX = speed;
         }
 
     }
