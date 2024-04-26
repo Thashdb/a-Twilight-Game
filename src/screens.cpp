@@ -70,9 +70,11 @@ void drawGame(){
 }
 
 void drawGameOver(){
+    glColor3f(0.0f, 0.0f, 0.0f);
     drawTextH1(500, 250, "Game Over");
-        char finalScoreText[50];
-        sprintf(finalScoreText, "Final Score: %d", finalScore);
-        drawTextH1(500, 300, finalScoreText);
-        glutTimerFunc(16, raining, 0);
+    char finalScoreText[50];
+    sprintf(finalScoreText, "Final Score: %d", finalScore);
+    drawTextH1(500, 300, finalScoreText);
+    characDawn();
+    glutTimerFunc(16, raining, 0);
 }

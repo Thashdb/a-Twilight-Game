@@ -48,6 +48,28 @@ void setup() {
 }
 #pragma endregion
 
+void resetGame() {
+    // Reiniciar a posição dos inimigos
+    for (int i = 0; i < MAX_ENEMIES; ++i) {
+        // Defina a posição inicial dos inimigos conforme necessário
+        // Por exemplo:
+        enemy[i].posX = 1210;
+        enemy[i].posY = 480;
+        enemy[i].velX = enemy->initialSpeed;
+    }
+
+    // Zerar a pontuação
+    score = 0;
+
+    // Reiniciar o tempo de início
+    startTime = time(NULL);
+
+    // Definir o estado do jogo
+    game = true;
+    start = false;
+    endGame = false;
+}
+
 // Função para desenhar os quadrados
 void draw() {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -92,7 +114,7 @@ void keyboard(unsigned char key, int x, int y) {
     //restart
     if(endGame){
         if(key==82 || 114){     // R ou r para recoeçar
-            printf("R\n");
+            resetGame();
         }  
     }
     // close

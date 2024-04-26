@@ -32,6 +32,7 @@ struct Enemies{
 
 void characFront(float x, float y);
 void characSide(float x, float y);
+void characDawn();
 
 void tree(float x, float y);
 
