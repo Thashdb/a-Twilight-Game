@@ -15,5 +15,6 @@ struct MenuItem {
 
 void drawTextH1(float posX, float posY, const char *string);
 void drawInit();
+int drawGame(int score);
 
 #endif
