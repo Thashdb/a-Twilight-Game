@@ -120,4 +120,11 @@ void characDawn(){
     #pragma endregion
 }
 
-void tree(float x, float y);
+void drawTree(int size, float x, float y, int aux1, int aux2, int aux3){
+    glColor3f(colors[aux1].r, colors[aux1].g, colors[aux1].b);
+    drawSquare(x+(6*size), y, x+(12*size), y, x+(12*size), y+(5*size), x+(6*size), y+(5*size));
+    drawSquare(x+(4*size), y+(5*size), x+(14*size), y+(5*size), x+(14*size), y+(11*size), x+(4*size), y+(11*size));
+    drawSquare(x, y+(11*size), x+(18*size), y+(11*size), x+(18*size), y+(17*size), x, y+(17*size));
+    glColor3f(colors[aux3].r, colors[aux3].g, colors[aux3].b);
+    drawSquare(x+(7*size), y+(17*size), x+(11*size), y+(17*size), x+(11*size), y+(21*size), x+(7*size), y+(21*size));
+}
