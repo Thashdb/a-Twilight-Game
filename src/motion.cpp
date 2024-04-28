@@ -129,11 +129,11 @@ void rain(std::vector<RainDrop>& drops) {
 
 void raining(int value) {
     for (auto& drop : raindrops) {
-        drop.x += static_cast<float>(rand() % 5) - 2.5f; // Movimento aleatório no eixo x (-2.5 a 2.5)
-        drop.y += static_cast<float>(rand() % 5); // Movimento aleatório para baixo no eixo y (0 a 5)
-        if (drop.y > height) {
-            drop.y = 0; // Reinicia a posição no topo da tela
-            drop.x = static_cast<float>(rand() % width); // Reinicia a posição x aleatoriamente
+        drop.x += static_cast<float>(rand() % 5) - 2.5f; 
+        drop.y += static_cast<float>(rand() % 5); 
+        if (drop.y > height-50) {
+            drop.y = 0; //reinicia a posição no topo da tela
+            drop.x = static_cast<float>(rand() % width); //reinicia a posição x
         }
     }
     glutPostRedisplay(); // Redesenha a cena
