@@ -75,6 +75,7 @@ void drawGameOver(){
     char finalScoreText[50];
     sprintf(finalScoreText, "Final Score: %d", finalScore);
     drawTextH1(500, 300, finalScoreText);
+    drawTextH2(500, 500, "press R to restart");
     characDawn();
     glutTimerFunc(16, raining, 0);
 }
