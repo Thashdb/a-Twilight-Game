@@ -29,6 +29,8 @@ bool start = true;
 bool game = false;
 bool endGame = false;
 
+vector<RainDrop> raindrops(500);
+
 #pragma region inicialização
 // Função de inicialização do GLUT
 void initGlut(int argc, char *argv[]) {
@@ -48,6 +50,11 @@ void setup() {
 }
 #pragma endregion
 
+// void drawRain() {
+//     vector<RainDrop> raindrops(500);
+//     drawGameOver(raindrops);
+// }
+
 // Função para desenhar os quadrados
 void draw() {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -59,7 +66,8 @@ void draw() {
         drawGame();
     }else if(endGame){
         game=start=false;
-        drawGameOver();
+        //drawRain();
+        drawGameOver(raindrops);
     }
     glFlush();
 }

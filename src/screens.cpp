@@ -69,13 +69,20 @@ void drawGame(){
         }
 }
 
-void drawGameOver(){
+void drawGameOver(vector<RainDrop>& raindrops) {
+    // Desenha o texto "Game Over" e a pontuação final
     glColor3f(0.0f, 0.0f, 0.0f);
     drawTextH1(500, 250, "Game Over");
     char finalScoreText[50];
     sprintf(finalScoreText, "Final Score: %d", finalScore);
     drawTextH1(500, 300, finalScoreText);
     drawTextH2(500, 500, "press R to restart");
+
+    // Desenha a chuva na tela
+    rain(raindrops);
+    raining(0);
+    
+    // Desenha o personagem caído
     characDawn();
-    glutTimerFunc(16, raining, 0);
+
 }

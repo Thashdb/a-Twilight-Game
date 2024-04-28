@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #include "shapes.h"
+#include "motion.h"
 
 struct MenuItem {
     float x, y; // Posição do texto
@@ -16,6 +17,6 @@ struct MenuItem {
 void drawTextH1(float posX, float posY, const char *string);
 void drawInit();
 void drawGame();
-void drawGameOver();
+void drawGameOver(vector<RainDrop>& raindrops);
 
 #endif

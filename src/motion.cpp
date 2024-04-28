@@ -5,6 +5,8 @@
 
 extern Player player;
 extern Enemies enemy[MAX_ENEMIES];
+//extern RainDrop raindrops; // Declarando raindrops como uma variável global
+extern vector<RainDrop> raindrops;
 
 extern int score, finalScore;
 extern time_t startTime;
@@ -13,7 +15,6 @@ extern bool isTimerStarted;
 extern bool game, endGame;
 
 extern int width, height;
-vector<RainDrop> raindrops(500);    //vetor para armazenar chuva
 
 void jump(int value) {
     if (player.jumping) {
@@ -115,26 +116,29 @@ void enemiesMotion(int values) {
     glutPostRedisplay();
 }
 
-
-void rain(vector<RainDrop>& drops){
+void rain(std::vector<RainDrop>& drops) {
     glColor3f(0.61f, 0.84f, 1.0f);
     glLineWidth(2.0);
     glBegin(GL_LINES);
-    for(const auto& drop : drops){
+    for (const auto& drop : drops) {
         glVertex2f(drop.x, drop.y);
-        glVertex2f(drop.x, drop.y-10);
+        glVertex2f(drop.x, drop.y - 10); // Desenha a gota de chuva como uma linha vertical
     }
     glEnd();
 }
 
-void raining(int value){
+void raining(int value) {
     for (auto& drop : raindrops) {
-        drop.y += 1.0; // Move a gota de chuva para baixo
+        drop.x += static_cast<float>(rand() % 5) - 2.5f; // Movimento aleatório no eixo x (-2.5 a 2.5)
+        drop.y += static_cast<float>(rand() % 5); // Movimento aleatório para baixo no eixo y (0 a 5)
         if (drop.y > height) {
-            drop.y = 0; // Se a gota de chuva atingir a parte inferior da tela, reinicie na parte superior
-            drop.x = rand() % width; // Reinicie a posição x aleatoriamente
+            drop.y = 0; // Reinicia a posição no topo da tela
+            drop.x = static_cast<float>(rand() % width); // Reinicia a posição x aleatoriamente
         }
     }
     glutPostRedisplay(); // Redesenha a cena
     glutTimerFunc(16, raining, 0);
 }
+
+
+
