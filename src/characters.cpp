@@ -128,3 +128,7 @@ void drawTree(int size, float x, float y, int aux1, int aux2, int aux3){
     glColor3f(colors[aux3].r, colors[aux3].g, colors[aux3].b);
     drawSquare(x+(7*size), y+(17*size), x+(11*size), y+(17*size), x+(11*size), y+(21*size), x+(7*size), y+(21*size));
 }
+
+void drawGround(int size, float x, float y, int aux1, int aux2, int aux3){
+    
+}

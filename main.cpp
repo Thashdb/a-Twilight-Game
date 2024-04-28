@@ -50,11 +50,6 @@ void setup() {
 }
 #pragma endregion
 
-// void drawRain() {
-//     vector<RainDrop> raindrops(500);
-//     drawGameOver(raindrops);
-// }
-
 // Função para desenhar os quadrados
 void draw() {
     glClear(GL_COLOR_BUFFER_BIT);

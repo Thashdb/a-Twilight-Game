@@ -42,6 +42,10 @@ void draw(MenuItem *items, int itemCount){
 void drawInit(){
     //tela de menu
     glClearColor(0.7f, 0.74f, 0.6f, 1.0f); // Cor de fundo (verdinho)
+    //chão
+    glColor3f(0.1, 0.2, 0.1); // Cor musgo
+    drawSquare(0, height-60, width, height-60, width, height, 0, height);
+
     characFront(player.posX, player.posY);
     glColor3f(0, 0, 0);
     drawTextH1(width/2.1, 80, "A");
@@ -50,6 +54,10 @@ void drawInit(){
 }
 
 void drawGame(){
+    //chão
+    glColor3f(0.1, 0.2, 0.1); // Cor musgo
+    drawSquare(0, height-60, width, height-60, width, height, 0, height);
+
     // Desenha o jogador
         characSide(player.posX, player.posY);
         //imprime pontuação
@@ -70,6 +78,9 @@ void drawGame(){
 }
 
 void drawGameOver(vector<RainDrop>& raindrops) {
+    //Desenha o chão
+    glColor3f(0.1, 0.2, 0.1); // Cor musgo
+    drawSquare(0, height-60, width, height-60, width, height, 0, height);
     // Desenha o texto "Game Over" e a pontuação final
     glColor3f(0.0f, 0.0f, 0.0f);
     drawTextH1(500, 250, "Game Over");
