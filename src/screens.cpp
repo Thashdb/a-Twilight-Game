@@ -91,6 +91,7 @@ void drawGameOver(vector<RainDrop>& raindrops) {
     drawTextH2(500, 500, "press 2 to restart");
 
     drawTextH2(500, 350, "Player Name: (press enter to save)");
+    drawTextH2(500, 380, "(Numbers not allowed in the player name)");
     // Escreve o nome do jogador
     drawTextH2(610, 350, playerName.c_str());
 
