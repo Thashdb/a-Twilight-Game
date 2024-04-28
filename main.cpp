@@ -4,11 +4,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <iostream>
+#include <fstream>
 
 #include "include/shapes.h"
 #include "include/screens.h"
 #include "include/characters.h"
 #include "include/motion.h"
+using namespace std;
 
 //tela
 int SCREEN_WIDTH, SCREEN_HEIGHT;
@@ -22,6 +25,8 @@ int score=0;
 int finalScore=0;
 time_t startTime;
 bool isTimerStarted = false;
+string playerName = "";
+
 #pragma endregion
 
 //escolha de telas
@@ -50,6 +55,18 @@ void setup() {
 }
 #pragma endregion
 
+void saveScore(const string& playerName, int score) {
+    ofstream file("score.txt", ios::app); // Abrir o arquivo no modo de anexação
+    if (file.is_open()) {
+        file << "Player: " << playerName;
+        file << "\t Score: " << score << endl;
+        file.close();
+        cout << "Score saved successfully." << endl;
+    } else {
+        cout << "Unable to open file." << endl;
+    }
+}
+
 // Função para desenhar os quadrados
 void draw() {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -69,9 +86,9 @@ void draw() {
 
 // Função para lidar com o teclado
 void keyboard(unsigned char key, int x, int y) {
-    //pulo
+    // Pulo
     if(game || start){
-        if(key==32){
+        if(key == 32){
             if (!player.jumping) {
                 player.jumping = true;
                 player.velY = -8.0f; // Define a velocidade inicial do pulo
@@ -81,22 +98,33 @@ void keyboard(unsigned char key, int x, int y) {
             }
         }
     }
-    //start
+    // Start
     if(start){
-        if(key==83 || key==115){    //S ou s para começar
+        if(key == 49){    // Tecla 1 para começar
             if (!isTimerStarted) {
                 startTime = time(NULL); // Registra o tempo atual
                 isTimerStarted = true; // Define a flag de temporizador iniciado como verdadeira
             }
             game = true;
             start = false;
-        }else{
-
         }
     }
-    //restart
+    // Restart
     else if(endGame){
-        if(key==82 || key == 114){     // R ou r para recomeçar
+        if(isalpha(key) || key == 32){
+            if(playerName.size() < 20) { // Limita o tamanho máximo do nome do jogador
+                playerName += key; // Adiciona o caractere digitado ao nome do jogador
+            }
+        }
+        // Se a tecla pressionada for o backspace (para apagar letras)
+        else if(key == 8 && !playerName.empty()){
+            playerName.pop_back(); // Remove o último caractere do nome do jogador
+        }
+        if(key == 13) { // Se a tecla Enter for pressionada
+            // Salva a pontuação com o nome do jogador
+            saveScore(playerName, finalScore);
+        }
+        if(key == 50){     // Tecla 2 para recomeçar
             // Definir o estado do jogo
             game = true;
             start = false;
@@ -110,14 +138,14 @@ void keyboard(unsigned char key, int x, int y) {
             glutKeyboardFunc(keyboard);
             enemyVel();
             draw();
-
         }  
     }
-    // close
-    if(key==27){    //esc
+    // Close
+    if(key == 27){    // Tecla Esc para sair
         exit(0);
     }
 }
+
 
 
 int main(int argc, char *argv[]) {

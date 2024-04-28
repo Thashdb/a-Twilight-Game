@@ -12,6 +12,7 @@ extern int finalScore;
 
 extern Player player;
 extern Enemies enemy[MAX_ENEMIES];
+extern string playerName;
 
 
 void drawTextH1(float posX, float posY, const char *string){
@@ -50,7 +51,7 @@ void drawInit(){
     glColor3f(0, 0, 0);
     drawTextH1(width/2.1, 80, "A");
     drawTextH1(width/2.4, 120, "Twilight Game");
-    drawTextH2(width/2.35, height/1.2, "press S to start");
+    drawTextH2(width/2.35, height/1.2, "press 1 to start");
 }
 
 void drawGame(){
@@ -87,7 +88,11 @@ void drawGameOver(vector<RainDrop>& raindrops) {
     char finalScoreText[50];
     sprintf(finalScoreText, "Final Score: %d", finalScore);
     drawTextH1(500, 300, finalScoreText);
-    drawTextH2(500, 500, "press R to restart");
+    drawTextH2(500, 500, "press 2 to restart");
+
+    drawTextH2(500, 350, "Player Name: ");
+    // Escreve o nome do jogador
+    drawTextH2(610, 350, playerName.c_str());
 
     // Desenha a chuva na tela
     rain(raindrops);
@@ -95,5 +100,4 @@ void drawGameOver(vector<RainDrop>& raindrops) {
     
     // Desenha o personagem caído
     characDawn();
-
 }
