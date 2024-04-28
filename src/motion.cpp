@@ -60,7 +60,7 @@ void enemyVel(){
 
         if (i == 0){
             enemy[i].posX = 1210.0f + rand() % 1000;
-            enemy[i].posY = 480.0f + rand() % 10;       // se não quiser mudanças no eixo y tira (+ rand() % 50)
+            enemy[i].posY = 480.0f + rand() % 25;       // se não quiser mudanças no eixo y tira (+ rand() % 50)
             enemy[i].velX = enemy->speed;
         }
         else{
@@ -70,7 +70,7 @@ void enemyVel(){
 
             do {
                 newPosX = enemy[i-1].posX + rand() % 1000; 
-                newPosY = 480.0f + rand() % 10;           // se não quiser mudanças no eixo y tira (+ rand() % 50)
+                newPosY = 480.0f + rand() % 25;           // se não quiser mudanças no eixo y tira (+ rand() % 50)
 
                 // Define a posição como válida inicialmente
                 validPosition = true;
