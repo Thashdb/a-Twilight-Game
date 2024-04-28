@@ -52,13 +52,15 @@ bool checkCollision() {
     return false;
 }
 
+#pragma region enemies velocity
+
 void enemyVel(){
     // Inicializa a posição e a velocidade dos quadrados pretos
     for (int i = 0; i < MAX_ENEMIES; ++i) {
 
         if (i == 0){
             enemy[i].posX = 1210.0f + rand() % 1000;
-            enemy[i].posY = 480.0f + rand() % 50;
+            enemy[i].posY = 480.0f + rand() % 10;       // se não quiser mudanças no eixo y tira (+ rand() % 50)
             enemy[i].velX = enemy->speed;
         }
         else{
@@ -67,8 +69,8 @@ void enemyVel(){
             bool validPosition;
 
             do {
-                newPosX = enemy[i-1].posX + rand() % 1000;
-                newPosY = 480.0f + rand() % 50;
+                newPosX = enemy[i-1].posX + rand() % 1000; 
+                newPosY = 480.0f + rand() % 10;           // se não quiser mudanças no eixo y tira (+ rand() % 50)
 
                 // Define a posição como válida inicialmente
                 validPosition = true;
@@ -91,6 +93,8 @@ void enemyVel(){
     }
 }
 
+#pragma endregion
+
 // Função para mover os quadrados pretos
 void enemiesMotion(int values) {
     // Move os quadrados pretos para a esquerda até sair da tela
@@ -102,7 +106,7 @@ void enemiesMotion(int values) {
 
     // Verifica a colisão a cada movimento
     if (checkCollision()) {
-        finalScore = score*5;
+        finalScore = score+1;       // era: score*5
         printf("Bateu\n");
         game=false;
         endGame=true;

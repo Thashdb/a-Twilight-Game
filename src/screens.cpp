@@ -55,7 +55,7 @@ void drawGame(){
         //imprime pontuação
         glColor3f(1.0f, 1.0f, 1.0f); // Cor branca para o jogador
         strcpy(text, "Score: ");
-        sprintf(aux, "%d", score*5);    //multiplicador de pontos
+        sprintf(aux, "%d", score+1);    //multiplicador de pontos, era: score*5
         strcat(text, aux);
         drawTextH1(880, 50, text);
 

@@ -48,27 +48,31 @@ void setup() {
 }
 #pragma endregion
 
-void resetGame() {
-    // Reiniciar a posição dos inimigos
-    for (int i = 0; i < MAX_ENEMIES; ++i) {
-        // Defina a posição inicial dos inimigos conforme necessário
-        // Por exemplo:
-        enemy[i].posX = 1210;
-        enemy[i].posY = 480;
-        enemy[i].velX = enemy->initialSpeed;
-    }
+#pragma region reset 1
 
-    // Zerar a pontuação
-    score = 0;
+// void resetGame() {
+//     // Reiniciar a posição dos inimigos
+//     for (int i = 0; i < MAX_ENEMIES; ++i) {
+//         // Defina a posição inicial dos inimigos conforme necessário
+//         // Por exemplo:
+//         enemy[i].posX = 1210;
+//         enemy[i].posY = 480;
+//         enemy[i].velX = enemy->initialSpeed;
+//     }
 
-    // Reiniciar o tempo de início
-    startTime = time(NULL);
+//     // Zerar a pontuação
+//     score = 0;
 
-    // Definir o estado do jogo
-    game = true;
-    start = false;
-    endGame = false;
-}
+//     // Reiniciar o tempo de início
+//     startTime = time(NULL);
+
+//     // Definir o estado do jogo
+//     game = true;
+//     start = false;
+//     endGame = false;
+// }
+
+#pragma endregion
 
 // Função para desenhar os quadrados
 void draw() {
@@ -112,9 +116,23 @@ void keyboard(unsigned char key, int x, int y) {
         }
     }
     //restart
-    if(endGame){
-        if(key==82 || 114){     // R ou r para recoeçar
-            resetGame();
+    else if(endGame){
+        if(key==82 || 114){     // R ou r para recomeçar
+            //resetGame();
+            // Definir o estado do jogo
+            game = true;
+            start = false;
+            endGame = false;
+
+            // Zerar
+            score = 0;
+            startTime = time(NULL);
+            enemy->speed = 3.0;         //era: speed = initialSpeed
+            isTimerStarted = true; // Define a flag de temporizador iniciado como verdadeira
+            glutKeyboardFunc(keyboard);
+            enemyVel();
+            draw();
+
         }  
     }
     // close
